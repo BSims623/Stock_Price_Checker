@@ -7,14 +7,18 @@
 	},
 	"dependencies": {
 		"axios": "^1.6.7",
+		"bcrypt": "^5.1.1",
+		"bcryptjs": "^2.4.3",
 		"body-parser": "^1.15.2",
 		"chai": "^4.2.0",
 		"chai-http": "^4.3.0",
 		"cors": "^2.8.1",
+		"crypto": "^1.0.1",
 		"dotenv": "^8.2.0",
 		"express": "^4.14.0",
 		"helmet": "^3.1.0",
 		"mocha": "^3.2.0",
+		"mongoose": "^8.2.1",
 		"nodemon": "^3.1.0"
 	},
 	"repository": {

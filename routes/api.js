@@ -1,7 +1,7 @@
 'use strict';
 const axios = require('axios');
 const User = require('../Models/UserModel.js');
-const { hashUsername, findOrCreateUser } = require('../utils/handleUser.js')
+const findOrCreateUser = require('../utils/handleUser.js')
 const { findOrCreateStock, updateLikes } = require('../utils/handleStock.js');
 
 module.exports = function (app) {
@@ -48,26 +48,20 @@ module.exports = function (app) {
         }
       } else {
         const isLiked = req.query.like;
-        try {
-          let result = await axios.get(`https://stock-price-checker-proxy.freecodecamp.rocks/v1/stock/${req.query.stock}/quote`)
-          const symbol = result.data.symbol
-          const price = result.data.latestPrice
-          if (symbol) {
-            let likes = await findOrCreateStock(symbol);
-            if (isLiked === 'true') {
-              const user = await findOrCreateUser(req.ip);
-              likes = await updateLikes(symbol, user.userName);
-            }
-            res.status(200).json({ "stockData": { "stock": result.data.symbol, "price": price, "likes": likes } })
-          } else {
-            res.status(200).json({ "stockData": { "error": result.data } })
+        let result = await axios.get(`https://stock-price-checker-proxy.freecodecamp.rocks/v1/stock/${req.query.stock}/quote`)
+        const symbol = result.data.symbol
+        const price = result.data.latestPrice
+        if (symbol) {
+          let likes = await findOrCreateStock(symbol);
+          if (isLiked === 'true') {
+            const user = await findOrCreateUser(req.ip);
+            likes = await updateLikes(symbol, user.userName);
           }
-
-        } catch (error) {
-          res.status(500).send('error')
+          res.status(200).json({ "stockData": { "stock": result.data.symbol, "price": price, "likes": likes } })
+        } else {
+          res.status(200).json({ "stockData": { "error": result.data } })
         }
       }
-
     });
 
 };

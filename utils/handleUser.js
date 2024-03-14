@@ -15,4 +15,4 @@ const findOrCreateUser = async (ip) => {
     }
 }
 
-module.exports = { hashUsername, findOrCreateUser }
+module.exports = findOrCreateUser

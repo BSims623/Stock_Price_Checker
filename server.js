@@ -48,7 +48,7 @@ app.use(function (req, res, next) {
 
 const connectdb = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URL);
+    await mongoose.connect(process.env.MONGO_URI);
   } catch (error) {
     console.log(error);
     process.exit(1);
